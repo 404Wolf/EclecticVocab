@@ -4,6 +4,8 @@ import base64
 
 from dotenv import load_dotenv
 import openai
+from gtts import gTTS
+
 load_dotenv()
 
 
@@ -99,7 +101,7 @@ class Vocab:
 
     def fetch_image(self, word: str, filepath: str) -> None:
         """
-        Fetches an AI generated image of the word and saves it to the filepath
+        Fetch an AI generated image of the word and saves it to a filepath
 
         Arg:
             word: The word to fetch the image of.
@@ -118,3 +120,17 @@ class Vocab:
         )
         with open(filepath, "wb") as imageFile:
             imageFile.write(base64.b64decode(output["data"][0]["b64_json"]))
+
+    def fetch_audio(self, word: str, filepath: str, slow: bool = True) -> None:
+        """
+        Fetch audio reading of the word and save it to a filepath
+
+        Arg:
+            word: The word to fetch the audio reading of.
+            filepath: The filepath to save the audio file to.
+            slow: Whether to have the reading be slow.
+
+        Returns:
+            None (saves the audio to the filepath)
+        """
+        gTTS(text=f". {word}", lang="en", tld="ca", slow=slow).save(filepath)

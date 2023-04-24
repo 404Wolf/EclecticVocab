@@ -20,11 +20,13 @@ def main():
 
     vocab = Vocab(system_description, openai_api_key)
     output = vocab.fetch_word(input_word).asDict()
+    word = output['word'].lower()
 
     with suppress(FileExistsError):
-        os.mkdir(f"outputs/{output['word'].lower()}")
-    vocab.fetch_image(input_word, f"outputs/{output['word']}/image.png")
-    with open(f"outputs/{output['word'].lower()}/data.json", "w") as outputFile:
+        os.mkdir(f"outputs/{word}")
+    vocab.fetch_image(input_word, f"outputs/{word}/image.png")
+    vocab.fetch_audio(input_word, f"outputs/{word}/audio.mp3")
+    with open(f"outputs/{word}/data.json", "w") as outputFile:
         json.dump(output, outputFile, indent=4)
 
 
