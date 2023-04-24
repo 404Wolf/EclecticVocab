@@ -1,0 +1,56 @@
+.card {
+    background-color: rgb(230, 230, 230);
+	color: black;
+	zoom: .81;
+}
+
+.flexed {
+	display: flex;
+ }
+
+.header {
+	color: #265667;
+	font-family: Open Sans, Helvetica, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 20px;
+	letter-spacing: .3px;
+	margin-top: 25px;
+	margin-bottom: -10px
+}
+
+.subheader {
+	color: #225F73;
+	font-size: 17px;
+	font-family: Playfair Display, serif;
+	font-weight: 600;
+}
+
+.card {
+	font-family: georgia;
+	font-size: 18px;
+	text-align: center;
+	color: black;
+}
+
+#typeans {
+	font-family: 'Georgia' !important;
+	font-size: 16px;
+	margin-top: 13px;
+}
+
+code#typeans {
+	display: inline-block;
+}
+
+img {
+	border-radius: 25px;
+	max-height: 130px;
+	margin: 5px;
+}
+
+hr {
+	background-color: black;
+	border: solid rgb(94, 94, 93);
+	border-radius: 5px;
+}

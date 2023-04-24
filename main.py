@@ -3,15 +3,15 @@ from contextlib import suppress
 
 from dotenv import load_dotenv
 from os import getenv
-import openai
 import json
 
+from anki.anki import Anki
 from vocab.vocab import Vocab
 
 load_dotenv()
 
 
-def main():
+def fetch_word_data():
     input_word = input("Enter a word: ")
 
     openai_api_key = getenv("TOKEN")
@@ -30,5 +30,12 @@ def main():
         json.dump(output, outputFile, indent=4)
 
 
+def dump_word_card():
+    words_to_dump = os.listdir("outputs")
+    words_to_dump.remove("archive")
+    dumper = Anki(words=words_to_dump)
+    dumper.generate(filename="export/export.apkg")
+
+
 if __name__ == "__main__":
-    main()
+    dump_word_card()

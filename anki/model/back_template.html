@@ -1,0 +1,70 @@
+<div style="display: flex; align-items: baseline; justify-content: center;">
+	<div style="font-size: 44px">
+		{{Word}}
+	</div>
+	<div style="margin-right: 10px"></div>
+	<div id="tags" class="subheader"></div>
+</div>
+
+{{Pronunciation}}
+
+<div id="notes" style="text-align: right; color: rgb(104, 104, 104)">
+	({{Notes}})
+</div>
+
+<div style="text-align: left">
+	{{Definition}}
+</div>
+
+<div class="header" style="text-align: left;">
+	example:
+</div>
+<div style="color: #225F73; text-align: left">
+	{{Example}}
+</div>
+
+<div style="margin-top: -20px">
+	<div class="flexed" style="justify-content: space-between;">
+		<div class="header">
+			synonyms:
+		</div>
+		<div class="header">
+			response:
+		</div>
+	</div>
+
+	<div class="flexed" style="justify-content: space-between;">
+		<div style="text-align: left; color: #225F73">
+			{{Synonyms}}
+		</div>
+		<div style="margin-top: 12px; white-space: nowrap;">
+			{{type:Word}}
+		</div>
+	</div>
+</div>
+
+<div style="text-align: right">
+	{{Audio}}
+</div>
+<div hidden>
+	{{Audio}}
+</div>
+
+<script type="text/javascript">
+  // remove tag groups from tag string ("vocab::noun" -> "noun")
+
+	var tags = '{{Tags}}';
+	tags = tags.split("vocab::")
+  tags = tags.join("")
+	document.getElementById("tags").innerHTML = tags;
+</script>
+<p id="test"></p>
+
+<script type="text/javascript">
+	// if there are no notes then remove the notes field
+
+	var notes = document.getElementById('notes');
+	if(notes.innerHTML.length == 5) {
+			notes.style.display = "none";
+	}
+</script>
