@@ -1,28 +1,32 @@
+import os
+from contextlib import suppress
+
 from dotenv import load_dotenv
 from os import getenv
 import openai
 import json
+
+from vocab.vocab import Vocab
+
 load_dotenv()
 
-input_word = input("Enter a word: ")
 
-openai.api_key = getenv("TOKEN")
-with open("system.txt") as systemFile:
-    system_description = systemFile.read()
+def main():
+    input_word = input("Enter a word: ")
 
-output = openai.ChatCompletion.create(
-  model="gpt-3.5-turbo",
-  messages=[
-        {"role": "system", "content": system_description},
-        {"role": "user", "content": input_word},
-    ],
-)["choices"][0]["message"]["content"]
+    openai_api_key = getenv("TOKEN")
+    with open("vocab/system.txt") as systemFile:
+        system_description = systemFile.read()
 
-try:
-    output = json.loads(output)
-except json.decoder.JSONDecodeError:
-    print("Error: Output is not valid JSON")
-    print(output)
+    vocab = Vocab(system_description, openai_api_key)
+    output = vocab.fetch_word(input_word).asDict()
 
-with open(f"outputs/{output['word'].lower()}.json", "w") as outputFile:
-    json.dump(output, outputFile, indent=4)
+    with suppress(FileExistsError):
+        os.mkdir(f"outputs/{output['word'].lower()}")
+    vocab.fetch_image(input_word, f"outputs/{output['word']}/image.png")
+    with open(f"outputs/{output['word'].lower()}/data.json", "w") as outputFile:
+        json.dump(output, outputFile, indent=4)
+
+
+if __name__ == "__main__":
+    main()
