@@ -24,7 +24,10 @@ def fetch_word_data():
 
     with suppress(FileExistsError):
         os.mkdir(f"outputs/{word}")
-    vocab.fetch_image(input_word, f"outputs/{word}/image.png")
+    print(json.dumps(output, indent=3))
+    imagePrompt = input("Enter image prompt: ") or None
+
+    vocab.fetch_image(input_word, f"outputs/{word}/image.png", prompt=imagePrompt)
     vocab.fetch_audio(input_word, f"outputs/{word}/audio.mp3")
     with open(f"outputs/{word}/data.json", "w") as outputFile:
         json.dump(output, outputFile, indent=4)
@@ -38,4 +41,4 @@ def dump_word_card():
 
 
 if __name__ == "__main__":
-    dump_word_card()
+    fetch_word_data()

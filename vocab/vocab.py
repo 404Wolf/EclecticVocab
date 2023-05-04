@@ -99,27 +99,36 @@ class Vocab:
             system_description=self.system_description,
         )
 
-    def fetch_image(self, word: str, filepath: str) -> None:
+    def fetch_image(
+        self,
+        word: str, 
+        filepath: str, 
+        count: int = 2, 
+        prompt: str | None = None
+    ) -> None:
         """
         Fetch an AI generated image of the word and saves it to a filepath
 
         Arg:
             word: The word to fetch the image of.
             filepath: The filepath to save the image to.
+            count: Number of images to generate.
+            prompt: The prompt to use for the image. Automatic prompts are generated 
+                if None is provided.
 
         Returns:
             None (saves the image to the filepath)
         """
         output = openai.Image.create(
             api_key=self.openai_api_key,
-            prompt=f"Detailed eccentric artistic and clear oil painting that "
-                   f"showcases/represents {word}",
-            n=1,
+            prompt=prompt or f"Create a detailed painting of an object or a scene that represents the meaning of {word}. The image should convey the essence of the word and help me remember its meaning.",
+            n=4,
             size="1024x1024",
             response_format="b64_json",
         )
-        with open(filepath, "wb") as imageFile:
-            imageFile.write(base64.b64decode(output["data"][0]["b64_json"]))
+        for i in range(count):
+            with open(f"{filepath[:filepath.find('.')]}-{i+1}.png", "wb") as imageFile:
+                imageFile.write(base64.b64decode(output["data"][i]["b64_json"]))
 
     def fetch_audio(self, word: str, filepath: str, slow: bool = True) -> None:
         """
